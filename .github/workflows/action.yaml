@@ -5,7 +5,7 @@ jobs:
   job1_deploy_kind:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ jobs.step1.outputs.time }}
+      output1: ${{ steps.step1.outputs.time }}
     steps:
       - name: start time      
         id: step1
@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "count of nodes: $(kubectl get nodes | grep -c 'NAME')" >> kind_report.log
           echo "kind version: $(kubectl version --short)" >> kind_report.log
-          echo "time spent on deployment: $(($(date '+%s')-${{ steps.step1.outputs.time }}))" >> kind_report.log 
+          echo "time spent on deployment: $(($(date '+%s')-${{ steps.step1.outputs.time }}))" >> kind_report.log
       - name: upload report
         uses: actions/upload-artifact@v2
         with:
@@ -27,7 +27,7 @@ jobs:
   job2_deploy_minikube:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ jobs.step1.outputs.time }}
+      output1: ${{ steps.step1.outputs.time }}
     steps:
       - name: start time
         id: step1
